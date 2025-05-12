@@ -1,0 +1,8 @@
+# 기본 .gitignore 내용
+node_modules/
+.next/
+out/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
