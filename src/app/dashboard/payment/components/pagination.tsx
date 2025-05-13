@@ -23,7 +23,7 @@ export function PaymentPagination({ totalPages, currentPage }: PaymentPagination
   
   // 최대 5개의 페이지 번호를 보여줌
   const createPageUrl = (page: number) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams.toString());
     params.set("page", page.toString());
     return `${pathname}?${params.toString()}`;
   };

@@ -30,7 +30,7 @@ export function LicenseFilter({
 
   // URL 파라미터 업데이트 함수
   const createQueryString = (params: Record<string, string | null>) => {
-    const newParams = new URLSearchParams(searchParams);
+    const newParams = new URLSearchParams(searchParams.toString());
     
     Object.entries(params).forEach(([key, value]) => {
       if (value === null || value === "" || value === "all") {

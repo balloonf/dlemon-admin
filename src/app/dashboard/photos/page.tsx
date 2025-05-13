@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SettingsIcon, UploadIcon } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "사진 관리 | 디레몬 안드로겐 탈모진단 관리자",
@@ -35,11 +36,15 @@ export default function PhotosPage() {
         
         <TabsContent value="photos" className="space-y-6">
           <div className="bg-white p-6 rounded-md shadow">
-            <PhotosFilter />
+            <Suspense fallback={<div className="p-4 text-center">필터 로딩 중...</div>}>
+              <PhotosFilter />
+            </Suspense>
           </div>
           
           <div className="bg-white p-6 rounded-md shadow">
-            <PhotosTable />
+            <Suspense fallback={<div className="p-4 text-center">데이터 로딩 중...</div>}>
+              <PhotosTable />
+            </Suspense>
           </div>
         </TabsContent>
         

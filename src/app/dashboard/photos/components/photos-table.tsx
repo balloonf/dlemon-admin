@@ -16,7 +16,7 @@ import {
   TableRow, 
   TableCell 
 } from "@/components/ui/table";
-import { Badge } from "./badge";
+import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Pagination } from "./pagination";
 import { 

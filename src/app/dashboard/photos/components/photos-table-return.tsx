@@ -1,3 +1,71 @@
+"use client";
+
+import { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { RefreshCwIcon, FileTextIcon, Trash2Icon, FileIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import { Progress } from '@/components/ui/progress';
+import { Pagination } from './pagination';
+import { Photo } from '@/lib/definitions';
+
+interface PhotosTableReturnProps {
+  photos: Photo[];
+  total: number;
+  page: number;
+  limit: number;
+  loading: boolean;
+  selectedPhotos: string[];
+  batchProcessing: boolean;
+  processingPhotoId: string | null;
+  deleteDialogOpen: boolean;
+  setDeleteDialogOpen: (open: boolean) => void;
+  setSelectedPhotos: (ids: string[]) => void;
+  toggleSelectPhoto: (id: string) => void;
+  toggleSelectAll: (checked: boolean) => void;
+  handleBatchDelete: () => void;
+  handleBatchAnalyze: () => void;
+  handleBatchCreateReport: () => void;
+  handleAnalyze: (id: string) => void;
+  handlePageChange: (page: number) => void;
+  formatDate: (date: string | null) => string;
+  statusBadge: (status: string) => string;
+  qualityBadge: (quality: string) => string;
+  resultBadge: (result: string) => string;
+  getPhotoType: (fileName: string) => string;
+}
+
+export function PhotosTableReturn({
+  photos,
+  total,
+  page,
+  limit,
+  loading,
+  selectedPhotos,
+  batchProcessing,
+  processingPhotoId,
+  deleteDialogOpen,
+  setDeleteDialogOpen,
+  setSelectedPhotos,
+  toggleSelectPhoto,
+  toggleSelectAll,
+  handleBatchDelete,
+  handleBatchAnalyze,
+  handleBatchCreateReport,
+  handleAnalyze,
+  handlePageChange,
+  formatDate,
+  statusBadge,
+  qualityBadge,
+  resultBadge,
+  getPhotoType
+}: PhotosTableReturnProps) {
+  const showBatchActions = selectedPhotos.length > 0;
+
   return (
     <div className="space-y-4">
       {/* 삭제 확인 다이얼로그 */}
@@ -290,3 +358,4 @@
       )}
     </div>
   );
+}

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { format, addWeeks, addMonths } from "date-fns";
 import { CalendarIcon, CalendarPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Institution, License, LicenseType } from "@/lib/definitions";
+import { Institution, License, LicenseType, LicenseStatus } from "@/lib/definitions";
 import { createLicense, updateLicense } from "@/lib/api";
 
 import { Button } from "@/components/ui/button";
@@ -96,7 +96,7 @@ export function FreeTrialManager({ institution, licenses }: FreeTrialManagerProp
       const licenseData = {
         institutionId: institution.id,
         type: "trial" as LicenseType,
-        status: "active",
+        status: "active" as LicenseStatus,
         startDate: startDate.toISOString(),
         expiryDate: endDate.toISOString(),
         maxUsers: 10,

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Breadcrumb } from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { PhotoUploadForm } from "../components/photo-upload-form";
 
 export const metadata: Metadata = {
@@ -14,13 +14,21 @@ export default function PhotoUploadPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <Breadcrumb
-            items={[
-              { title: "대시보드", href: "/dashboard" },
-              { title: "사진 관리", href: "/dashboard/photos" },
-              { title: "사진 업로드", href: "/dashboard/photos/new" },
-            ]}
-          />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/dashboard">대시보드</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/dashboard/photos">사진 관리</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>사진 업로드</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
           <h1 className="text-3xl font-bold mt-2">사진 업로드</h1>
         </div>
         

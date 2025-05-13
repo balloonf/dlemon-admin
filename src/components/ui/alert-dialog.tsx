@@ -13,10 +13,9 @@ const AlertDialogTrigger = DialogPrimitive.Trigger
 
 // 나머지 컴포넌트는 Dialog 기반으로 재구현
 const AlertDialogPortal = ({
-  className,
   ...props
 }: DialogPrimitive.DialogPortalProps) => (
-  <DialogPrimitive.Portal className={cn(className)} {...props} />
+  <DialogPrimitive.Portal {...props} />
 )
 AlertDialogPortal.displayName = "AlertDialogPortal"
 

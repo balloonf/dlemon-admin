@@ -32,7 +32,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-import { Institution, User } from "@/lib/definitions";
+import { Institution, UpdateUserDTO, User } from "@/lib/definitions";
 
 // 사용자 편집 폼 스키마 정의
 const userEditFormSchema = z.object({
@@ -130,7 +130,7 @@ export function EditUserForm({
       );
       
       // 비밀번호가 제공되지 않은 경우 업데이트에서 제외
-      const updateData: Partial<User> = {
+      const updateData: UpdateUserDTO = {
         name: values.name,
         email: values.email,
         phoneNumber: values.phoneNumber,

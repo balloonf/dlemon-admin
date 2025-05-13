@@ -22,7 +22,7 @@ export function LicensePagination({
 
   // 페이지 변경 함수
   const changePage = (page: number) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams.toString());
     
     if (page === 1) {
       params.delete("page");

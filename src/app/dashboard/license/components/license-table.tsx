@@ -262,7 +262,7 @@ export function LicenseTable({ licenses }: { licenses: License[] }) {
                         
                         {license.status === "active" && (
                           <DropdownMenuItem
-                            onClick={() => openStatusDialog(license, "inactive")}
+                            onClick={() => openStatusDialog(license, "canceled")}
                           >
                             <PauseCircle className="mr-2 h-4 w-4" />
                             일시중지

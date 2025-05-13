@@ -336,10 +336,13 @@ export default function NoticePage() {
       {totalPages > 1 && (
         <Pagination className="mx-auto">
           <PaginationContent>
-            <PaginationItem>
+            <PaginationItem className={currentPage === 1 ? "opacity-50 pointer-events-none" : ""}>
               <PaginationPrevious
-                onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-                disabled={currentPage === 1}
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePageChange(Math.max(1, currentPage - 1));
+                }}
               />
             </PaginationItem>
             {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
@@ -365,7 +368,11 @@ export default function NoticePage() {
                 return (
                   <PaginationItem key={pageNum}>
                     <PaginationLink
-                      onClick={() => handlePageChange(pageNum)}
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handlePageChange(pageNum);
+                      }}
                       isActive={currentPage === pageNum}
                     >
                       {pageNum}
@@ -383,7 +390,11 @@ export default function NoticePage() {
                 </PaginationItem>
                 <PaginationItem>
                   <PaginationLink
-                    onClick={() => handlePageChange(totalPages)}
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handlePageChange(totalPages);
+                    }}
                     isActive={currentPage === totalPages}
                   >
                     {totalPages}
@@ -392,10 +403,13 @@ export default function NoticePage() {
               </>
             )}
             
-            <PaginationItem>
+            <PaginationItem className={currentPage === totalPages ? "opacity-50 pointer-events-none" : ""}>
               <PaginationNext
-                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-                disabled={currentPage === totalPages}
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePageChange(Math.min(totalPages, currentPage + 1));
+                }}
               />
             </PaginationItem>
           </PaginationContent>

@@ -70,10 +70,13 @@ export function MobileUsersPagination({ totalPages, currentPage }: MobileUsersPa
   return (
     <Pagination>
       <PaginationContent>
-        <PaginationItem>
+        <PaginationItem className={currentPage === 1 ? "opacity-50 pointer-events-none" : ""}>
           <PaginationPrevious
-            onClick={() => currentPage > 1 && changePage(currentPage - 1)}
-            disabled={currentPage === 1}
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              currentPage > 1 && changePage(currentPage - 1);
+            }}
           />
         </PaginationItem>
         
@@ -85,8 +88,12 @@ export function MobileUsersPagination({ totalPages, currentPage }: MobileUsersPa
           ) : (
             <PaginationItem key={pageNumber}>
               <PaginationLink
+                href="#"
                 isActive={pageNumber === currentPage}
-                onClick={() => changePage(pageNumber)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  changePage(pageNumber);
+                }}
               >
                 {pageNumber}
               </PaginationLink>
@@ -94,10 +101,13 @@ export function MobileUsersPagination({ totalPages, currentPage }: MobileUsersPa
           )
         ))}
         
-        <PaginationItem>
+        <PaginationItem className={currentPage === totalPages ? "opacity-50 pointer-events-none" : ""}>
           <PaginationNext
-            onClick={() => currentPage < totalPages && changePage(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              currentPage < totalPages && changePage(currentPage + 1);
+            }}
           />
         </PaginationItem>
       </PaginationContent>

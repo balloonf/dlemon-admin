@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Photo, PhotoAnalysisResult } from "@/lib/definitions";
 import { getPhotoById, getPhotoAnalysisResult, analyzePhoto } from "@/lib/api";
 import { Button } from "@/components/ui/button";
-import { Badge } from "./badge";
+import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

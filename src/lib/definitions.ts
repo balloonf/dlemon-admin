@@ -3,6 +3,28 @@ export type UserRole = "admin" | "member";
 
 export type UserStatus = "active" | "inactive" | "pending";
 
+// 사용자 생성을 위한 인터페이스
+export interface CreateUserDTO {
+  name: string;
+  email: string;
+  username: string;
+  phoneNumber: string;
+  password: string;
+  institutionId: string;
+  institutionName: string;
+  role: UserRole;
+  status: UserStatus;
+  birthDate?: string;
+  gender?: 'male' | 'female';
+  jobTitle?: string;
+  licenseNumber?: string;
+}
+
+// 사용자 수정을 위한 인터페이스
+export interface UpdateUserDTO extends Partial<Omit<User, "id" | "createdAt" | "updatedAt" | "lastLogin">> {
+  password?: string;
+}
+
 export interface User {
   id: string;
   name: string;

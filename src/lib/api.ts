@@ -1,4 +1,6 @@
 import { 
+  CreateUserDTO,
+  UpdateUserDTO,
   Institution, 
   License, 
   LicenseFormData, 
@@ -22,7 +24,15 @@ import {
   RefundFormData, 
   User, 
   UserRole, 
-  UserStatus 
+  UserStatus,
+  Notice,
+  NoticeStatus,
+  NoticeTarget,
+  NoticeFormData,
+  Faq,
+  FaqCategory,
+  FaqStatus,
+  FaqFormData
 } from "./definitions";
 
 // 샘플 데이터 - 실제 구현에서는 API 호출로 대체
@@ -715,7 +725,7 @@ export async function getUserById(id: string): Promise<User> {
 }
 
 // 이용자 생성
-export async function createUser(userData: Omit<User, "id" | "createdAt" | "updatedAt" | "lastLogin">): Promise<User> {
+export async function createUser(userData: CreateUserDTO): Promise<User> {
   await delay(800);
   
   // 새 사용자 ID 생성 (실제로는 서버에서 생성)
@@ -736,7 +746,7 @@ export async function createUser(userData: Omit<User, "id" | "createdAt" | "upda
 }
 
 // 이용자 수정
-export async function updateUser(id: string, userData: Partial<User>): Promise<User> {
+export async function updateUser(id: string, userData: UpdateUserDTO): Promise<User> {
   await delay(800);
   
   const userIndex = SAMPLE_USERS.findIndex(user => user.id === id);
@@ -1173,7 +1183,7 @@ export async function processRefund(id: string, refundData: RefundFormData): Pro
   }
   
   // 환불 상태 설정
-  const status = refundData.amount === payment.amount ? "refunded" : "partial_refunded";
+  const status: PaymentStatus = refundData.amount === payment.amount ? "refunded" : "partial_refunded";
   
   // 결제 정보 업데이트
   const updatedPayment = {
@@ -1406,8 +1416,8 @@ export async function analyzePhoto(id: string): Promise<Photo> {
   // 사진 정보 업데이트
   const updatedPhoto = {
     ...SAMPLE_PHOTOS[photoIndex],
-    status: "analyzed",
-    quality: score > 0.8 ? "high" : score > 0.5 ? "medium" : "low",
+    status: "analyzed" as PhotoStatus,
+    quality: (score > 0.8 ? "high" : score > 0.5 ? "medium" : "low") as PhotoQuality,
     analysisResult: result,
     analysisScore: score,
     analysisDate: new Date().toISOString(),
@@ -1415,9 +1425,9 @@ export async function analyzePhoto(id: string): Promise<Photo> {
   };
   
   // 샘플 데이터 업데이트 (실제로는 DB 업데이트)
-  SAMPLE_PHOTOS[photoIndex] = updatedPhoto;
+  SAMPLE_PHOTOS[photoIndex] = updatedPhoto as Photo;
   
-  return updatedPhoto;
+  return updatedPhoto as Photo;
 }
 
 // 사진 분석 결과 상세 가져오기
@@ -1496,7 +1506,7 @@ export async function updatePhotoStatus(id: string, status: PhotoStatus): Promis
   // 사진 정보 업데이트
   const updatedPhoto = {
     ...SAMPLE_PHOTOS[photoIndex],
-    status: status,
+    status: status as PhotoStatus,
     updatedAt: new Date().toISOString()
   };
   
@@ -1508,9 +1518,9 @@ export async function updatePhotoStatus(id: string, status: PhotoStatus): Promis
   }
   
   // 샘플 데이터 업데이트 (실제로는 DB 업데이트)
-  SAMPLE_PHOTOS[photoIndex] = updatedPhoto;
+  SAMPLE_PHOTOS[photoIndex] = updatedPhoto as Photo;
   
-  return updatedPhoto;
+  return updatedPhoto as Photo;
 }
 
 // 사진 삭제 (실제 파일 삭제가 아닌 상태 변경)
@@ -1567,9 +1577,9 @@ export async function updatePhotoNotes(id: string, notes: string | null): Promis
   };
   
   // 샘플 데이터 업데이트 (실제로는 DB 업데이트)
-  SAMPLE_PHOTOS[photoIndex] = updatedPhoto;
+  SAMPLE_PHOTOS[photoIndex] = updatedPhoto as Photo;
   
-  return updatedPhoto;
+  return updatedPhoto as Photo;
 }
 
 // ==================== 리포트 관리 API 함수 ====================
@@ -1871,7 +1881,8 @@ export async function deleteReport(id: string): Promise<boolean> {
 // ==================== 공지사항 관리 API 함수 ====================
 
 // 샘플 공지사항 데이터
-const SAMPLE_NOTICES = [
+// Notice 타입과 호환되도록 타입 정의 추가
+const SAMPLE_NOTICES: Array<Notice & { startDate: string | null }> = [
   {
     id: "NOTICE-2025-001",
     title: "시스템 정기 점검 안내",
@@ -2096,7 +2107,8 @@ export async function createNotice(noticeData: NoticeFormData): Promise<Notice> 
   };
   
   // 샘플 데이터에 추가 (실제로는 DB에 저장)
-  SAMPLE_NOTICES.push(newNotice);
+  // 여기서 타입 캐스팅을 통해 SAMPLE_NOTICES 배열에 맞는 타입으로 변환
+  SAMPLE_NOTICES.push(newNotice as any);
   
   return newNotice;
 }
@@ -2130,7 +2142,7 @@ export async function updateNotice(id: string, noticeData: Partial<NoticeFormDat
   };
   
   // 샘플 데이터 업데이트 (실제로는 DB 업데이트)
-  SAMPLE_NOTICES[noticeIndex] = updatedNotice as Notice;
+  SAMPLE_NOTICES[noticeIndex] = updatedNotice as any;
   
   return updatedNotice as Notice;
 }
@@ -2159,7 +2171,8 @@ export async function deleteNotice(id: string): Promise<boolean> {
 // ==================== FAQ 관리 API 함수 ====================
 
 // 샘플 FAQ 데이터
-const SAMPLE_FAQS = [
+// Faq 타입과 호환되도록 타입 정의 추가
+const SAMPLE_FAQS: Array<Faq & { attachments: { id: string; fileName: string; fileSize: number; fileUrl: string; }[] }> = [
   {
     id: "FAQ-2025-001",
     question: "과거 진단 기록을 확인할 수 있나요?",
@@ -2411,7 +2424,8 @@ export async function createFaq(faqData: FaqFormData): Promise<Faq> {
   };
   
   // 샘플 데이터에 추가 (실제로는 DB에 저장)
-  SAMPLE_FAQS.push(newFaq);
+  // 타입 캐스팅을 통해 타입 불일치 문제 해결
+  SAMPLE_FAQS.push(newFaq as any);
   
   return newFaq;
 }
@@ -2445,7 +2459,8 @@ export async function updateFaq(id: string, faqData: Partial<FaqFormData>): Prom
   };
   
   // 샘플 데이터 업데이트 (실제로는 DB 업데이트)
-  SAMPLE_FAQS[faqIndex] = updatedFaq as Faq;
+  // 타입 캐스팅을 통해 타입 불일치 문제 해결
+  SAMPLE_FAQS[faqIndex] = updatedFaq as any;
   
   return updatedFaq as Faq;
 }

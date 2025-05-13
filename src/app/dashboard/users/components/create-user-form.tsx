@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-import { Institution } from "@/lib/definitions";
+import { CreateUserDTO, Institution } from "@/lib/definitions";
 
 // 사용자 생성 폼 스키마 정의
 const userFormSchema = z.object({
